@@ -12,7 +12,7 @@ export default function PollsPage() {
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Active Polls</h1>
-        <Button>Create New Poll</Button>
+        <Button className='font-aeonik'>Create New Poll</Button>
       </div>
       
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

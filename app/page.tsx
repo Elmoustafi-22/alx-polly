@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="max-w-3xl mx-auto text-center space-y-8">
-        <h1 className="text-5xl font-bold tracking-tight">
+        <h1 className="text-5xl font-bold tracking-tight font-aeonik">
           Create and Share Polls with Ease
         </h1>
         
@@ -25,15 +25,15 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-3 gap-8 pt-16">
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold">Easy to Create</h3>
+            <h3 className="text-xl font-semibold font-aeonik">Easy to Create</h3>
             <p className="text-muted-foreground">Create polls in seconds with our intuitive interface</p>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold">Real-time Results</h3>
+            <h3 className="text-xl font-semibold font-aeonik">Real-time Results</h3>
             <p className="text-muted-foreground">Watch votes come in and update instantly</p>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold">Share Anywhere</h3>
+            <h3 className="text-xl font-semibold font-aeonik">Share Anywhere</h3>
             <p className="text-muted-foreground">Share your polls easily across any platform</p>
           </div>
         </div>

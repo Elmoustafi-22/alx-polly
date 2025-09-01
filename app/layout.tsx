@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/navigation'
-
-const inter = Inter({ subsets: ['latin'] })
+import { AuthProvider } from '@/contexts/auth-context'
+import { aeonik, hakenGrotesk } from './fonts'
 
 export const metadata: Metadata = {
   title: 'Alx Polly - Create and Share Polls',
@@ -17,9 +16,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navigation />
-        <main>{children}</main>
+      <body className={`${hakenGrotesk.variable} ${aeonik.variable} font-haken`}>
+        <AuthProvider>
+          <Navigation />
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   )
