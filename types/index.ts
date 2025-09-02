@@ -29,3 +29,18 @@ export interface Vote {
   userId: string
   createdAt: Date
 }
+
+// Database-shaped types used in server actions/pages working with Supabase results
+export interface DbPollWithOptions {
+  id: string
+  title: string
+  description?: string | null
+  created_by: string
+  created_at?: string
+  is_active?: boolean
+  poll_options: Array<{
+    id: string
+    text: string
+    votes: number
+  }>
+}

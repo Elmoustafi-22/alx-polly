@@ -9,20 +9,10 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
 import { updatePoll, getPollById } from '@/lib/actions'
 import { AuthGuard } from '@/components/auth-guard'
+import type { DbPollWithOptions } from '@/types'
 
-interface PollOption {
-  id: string
-  text: string
-  votes: number
-}
-
-interface Poll {
-  id: string
-  title: string
-  description?: string
-  created_by: string
-  poll_options: PollOption[]
-}
+// Using shared DB-shaped type from types
+type Poll = DbPollWithOptions
 
 interface EditPollPageProps {
   params: {

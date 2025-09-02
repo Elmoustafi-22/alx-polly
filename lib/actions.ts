@@ -96,6 +96,7 @@ export async function getPollById(pollId: string) {
         title,
         description,
         created_at,
+        created_by,
         is_active,
         poll_options (
           id,

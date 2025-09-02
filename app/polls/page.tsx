@@ -93,7 +93,7 @@ export default function PollsPage() {
         <h1 className="text-3xl font-bold font-aeonik">Active Polls</h1>
         {user ? (
           <Link href="/polls/create">
-            <Button className='font-aeonik'>Create New Poll</Button>
+        <Button className='font-aeonik'>Create New Poll</Button>
           </Link>
         ) : (
           <Link href="/login">
@@ -117,23 +117,23 @@ export default function PollsPage() {
           )}
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {polls.map((poll) => {
             const totalVotes = poll.poll_options?.reduce((sum, option) => sum + option.votes, 0) || 0
             const isOwner = user?.id === poll.created_by
             
             return (
-              <Card key={poll.id}>
-                <CardHeader>
+          <Card key={poll.id}>
+            <CardHeader>
                   <CardTitle className="font-aeonik">{poll.title}</CardTitle>
                   <CardDescription>
                     {totalVotes} votes • {poll.poll_options?.length || 0} options
                     {isOwner && <span className="ml-2 text-blue-600">• Your poll</span>}
                   </CardDescription>
-                </CardHeader>
+            </CardHeader>
                 <CardContent className="space-y-3">
                   <Link href={`/polls/${poll.id}`}>
-                    <Button variant="outline" className="w-full">Vote Now</Button>
+              <Button variant="outline" className="w-full">Vote Now</Button>
                   </Link>
                   
                   {isOwner && (
@@ -174,11 +174,11 @@ export default function PollsPage() {
                       </AlertDialog>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+            </CardContent>
+          </Card>
             )
           })}
-        </div>
+      </div>
       )}
     </div>
   )

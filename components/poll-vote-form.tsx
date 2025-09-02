@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Label } from '@/components/ui/label'
-import { Progress } from '@/components/ui/progress'
 import { useAuth } from '@/contexts/auth-context'
 import { submitVote } from '@/lib/actions'
 import { useRouter } from 'next/navigation'
+import { PollResultChart } from './poll-result-chart'
 
 interface PollOption {
   id: string
@@ -33,8 +33,6 @@ export function PollVoteForm({ poll }: PollVoteFormProps) {
   const [error, setError] = useState('')
   const { user } = useAuth()
   const router = useRouter()
-
-  const totalVotes = poll.poll_options.reduce((sum, option) => sum + option.votes, 0)
 
   const handleVote = async () => {
     if (!selectedOption) {
@@ -64,11 +62,6 @@ export function PollVoteForm({ poll }: PollVoteFormProps) {
     } finally {
       setIsVoting(false)
     }
-  }
-
-  const getPercentage = (votes: number) => {
-    if (totalVotes === 0) return 0
-    return Math.round((votes / totalVotes) * 100)
   }
 
   return (
@@ -101,24 +94,11 @@ export function PollVoteForm({ poll }: PollVoteFormProps) {
           </Button>
         </div>
       ) : (
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold">Results</h3>
-          {poll.poll_options.map((option) => {
-            const percentage = getPercentage(option.votes)
-            return (
-              <div key={option.id} className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>{option.text}</span>
-                  <span className="font-medium">{option.votes} votes ({percentage}%)</span>
-                </div>
-                <Progress value={percentage} className="h-2" />
-              </div>
-            )
-          })}
-          <div className="pt-4 text-center text-sm text-muted-foreground">
-            Total votes: {totalVotes}
-          </div>
-        </div>
+        <PollResultChart 
+          poll={poll} 
+          hasVoted={true}
+          onVoteAgain={() => setHasVoted(false)}
+        />
       )}
     </div>
   )
