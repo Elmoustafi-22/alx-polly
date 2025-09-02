@@ -1,7 +1,23 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/auth-context'
 
 export default function HomePage() {
+  const { user, loading } = useAuth()
+  
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-3xl mx-auto text-center space-y-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -15,9 +31,15 @@ export default function HomePage() {
         </p>
 
         <div className="flex justify-center gap-4 pt-4">
-          <Link href="/polls/create">
-            <Button size="lg">Create Your First Poll</Button>
-          </Link>
+          {user ? (
+            <Link href="/polls/create">
+              <Button size="lg">Create Your First Poll</Button>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <Button size="lg">Sign In to Create Poll</Button>
+            </Link>
+          )}
           <Link href="/polls">
             <Button variant="outline" size="lg">Browse Polls</Button>
           </Link>

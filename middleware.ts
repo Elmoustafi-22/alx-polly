@@ -12,7 +12,6 @@ export async function middleware(request: NextRequest) {
 
   // Protect routes that require authentication
   if (!session && (
-    request.nextUrl.pathname.startsWith('/polls/create') ||
     request.nextUrl.pathname.startsWith('/profile')
   )) {
     return NextResponse.redirect(new URL('/login', request.url))
