@@ -8,6 +8,24 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+/**
+ * RegisterPage component that handles user registration.
+ * 
+ * This component provides a user interface for creating a new account. It includes:
+ * - Form inputs for username, email, and password
+ * - Client-side validation for input fields
+ * - Error handling and display
+ * - Loading state management during form submission
+ * 
+ * The authentication flow:
+ * 1. User enters their information (username, email, password)
+ * 2. Client-side validation is performed to ensure data quality
+ * 3. On form submission, the signUp method from useAuth hook is called
+ * 4. If successful, user is redirected to the login page
+ * 5. If an error occurs, appropriate error message is displayed
+ * 
+ * @returns A registration form wrapped in a card layout
+ */
 export default function RegisterPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,11 +40,32 @@ export default function RegisterPage() {
     setIsLoading(true)
     setError('')
 
+    // Basic validation
+    if (username.trim().length < 3) {
+      setError('Username must be at least 3 characters long')
+      setIsLoading(false)
+      return
+    }
+
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long')
+      setIsLoading(false)
+      return
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError('Please enter a valid email address')
+      setIsLoading(false)
+      return
+    }
+
     try {
       await signUp(email, password, username)
       router.push('/login')
-    } catch (error) {
-      setError('Failed to create account. Please try again.')
+    } catch (error: any) {
+      // More specific error handling
+      const errorMessage = error?.message || 'Failed to create account. Please try again.'
+      setError(errorMessage)
     } finally {
       setIsLoading(false)
     }

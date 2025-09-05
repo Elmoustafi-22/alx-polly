@@ -1,5 +1,4 @@
 'use client'
-
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -20,6 +19,47 @@ interface EditPollPageProps {
   }
 }
 
+/**
+ * Edit Poll Page Component
+ * 
+ * Renders a form that allows users to edit an existing poll.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.params - URL parameters
+ * @param {string} props.params.id - The ID of the poll to edit
+ * 
+ * @example
+ * ```tsx
+ * <EditPollPage params={{ id: '123' }} />
+ * ```
+ * 
+ * @description
+ * This component:
+ * - Fetches the poll data by ID
+ * - Verifies the current user is the poll owner
+ * - Provides form inputs for editing poll title, description, and options
+ * - Handles validation (requires title and at least 2 options)
+ * - Submits updated poll data to the API
+ * - Shows loading states, success messages, and error handling
+ * - Redirects after successful update
+ * 
+ * State variables:
+ * - poll: The fetched poll data
+ * - title: Editable poll title
+ * - description: Editable poll description
+ * - options: Array of editable poll options
+ * - isLoading: Tracks form submission state
+ * - isFetching: Tracks initial data loading state
+ * - error: Stores error messages
+ * - success: Indicates successful update
+ * 
+ * Key functions:
+ * - addOption: Adds a new empty option to the options array
+ * - updateOption: Updates an option at a specific index
+ * - removeOption: Removes an option (prevents having fewer than 2 options)
+ * - handleSubmit: Validates and submits the form data
+ */
 export default function EditPollPage({ params }: EditPollPageProps) {
   const [poll, setPoll] = useState<Poll | null>(null)
   const [title, setTitle] = useState('')

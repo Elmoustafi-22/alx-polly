@@ -30,6 +30,47 @@ interface Poll {
   }>
 }
 
+/**
+ * Component for displaying and managing polls in the application.
+ * 
+ * This page shows a list of active polls, allows authenticated users to create new polls,
+ * and provides poll owners with options to edit or delete their polls.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <PollsPage />
+ * ```
+ * 
+ * @returns A React component that displays the polls page with loading states,
+ * empty state messaging, and a grid of poll cards when polls are available.
+ */
+/**
+ * @component PollsPage
+ * @description Main page component for displaying and managing polls
+ * 
+ * This component handles:
+ * - Fetching and displaying all available polls
+ * - Allowing authenticated users to create new polls
+ * - Providing poll owners with edit and delete capabilities
+ * - Displaying appropriate loading states and empty states
+ * 
+ * @returns {JSX.Element} Rendered polls page with appropriate UI based on authentication
+ * and data loading states
+ */
+
+/**
+ * @function handleDeletePoll
+ * @description Handles the deletion of a poll by the authorized owner
+ * @param {string} pollId - The unique identifier of the poll to delete
+ * 
+ * This function:
+ * 1. Validates that a user is logged in
+ * 2. Sets a loading state for the specific poll being deleted
+ * 3. Calls the delete API and updates the UI accordingly
+ * 4. Handles any errors during the deletion process
+ * 5. Resets the loading state when complete
+ */
 export default function PollsPage() {
   const [polls, setPolls] = useState<Poll[]>([])
   const [loading, setLoading] = useState(true)

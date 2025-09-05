@@ -8,6 +8,26 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+/**
+ * LoginPage Component
+ * 
+ * This component provides a login page for user authentication.
+ * 
+ * Authentication Flow:
+ * 1. User enters email and password in the form
+ * 2. Client-side validation ensures valid email format and input length
+ * 3. Credentials are sent to the authentication service via the signIn method
+ * 4. Upon successful authentication, user is redirected to the polls page
+ * 5. On failure, a generic error message is displayed for security
+ * 
+ * Security Features:
+ * - Input validation to prevent malformed data
+ * - Length restrictions to prevent DOS attacks
+ * - Generic error messages to prevent user enumeration
+ * - Error logging for troubleshooting
+ * 
+ * @returns A React component that renders a login form with email and password fields
+ */
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,11 +41,27 @@ export default function LoginPage() {
     setIsLoading(true)
     setError('')
 
+    // Basic validation
+    if (!email || !email.includes('@') || !password) {
+      setError('Please enter a valid email and password')
+      setIsLoading(false)
+      return
+    }
+
+    // Prevent login attempts with overly long inputs to prevent DOS attacks
+    if (email.length > 100 || password.length > 100) {
+      setError('Input exceeds maximum allowed length')
+      setIsLoading(false)
+      return
+    }
+
     try {
       await signIn(email, password)
       router.push('/polls')
-    } catch (error) {
+    } catch (error: any) {
+      // Generic error message to prevent user enumeration
       setError('Invalid email or password')
+      console.error('Login error:', error.message || 'Unknown error')
     } finally {
       setIsLoading(false)
     }

@@ -10,6 +10,27 @@ import { useAuth } from '@/contexts/auth-context'
 import { createPoll } from '@/lib/actions'
 import { AuthGuard } from '@/components/auth-guard'
 
+/**
+ * A page component for creating new polls.
+ * 
+ * This component provides a form interface that allows users to:
+ * - Add a poll title (question)
+ * - Add an optional description
+ * - Add at least two options for the poll
+ * - Submit the poll to be created
+ * 
+ * The component handles form validation, submission state, error handling,
+ * and redirects to the newly created poll upon successful creation.
+ * 
+ * @remarks
+ * The component is wrapped with AuthGuard to ensure only authenticated users can access it.
+ * Form validation ensures that:
+ * - The poll has a non-empty title
+ * - At least two valid options are provided
+ * - The user is authenticated before submission
+ * 
+ * @returns The rendered create poll form with validation and submission handling
+ */
 export default function CreatePollPage() {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
