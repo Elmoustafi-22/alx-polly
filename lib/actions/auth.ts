@@ -4,16 +4,15 @@ import { createServerActionClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+// Create a reusable function to get Supabase client
+const getSupabaseClient = () => createServerActionClient({ cookies })
+
 export async function signIn(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-
-  const supabase = createServerActionClient({ cookies })
-
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  })
+  
+  const supabase = getSupabaseClient()
+  const { error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
     return { error: error.message }
@@ -25,9 +24,8 @@ export async function signIn(formData: FormData) {
 export async function signUp(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-
-  const supabase = createServerActionClient({ cookies })
-
+  
+  const supabase = getSupabaseClient()
   const { error } = await supabase.auth.signUp({
     email,
     password,
@@ -44,7 +42,7 @@ export async function signUp(formData: FormData) {
 }
 
 export async function signOut() {
-  const supabase = createServerActionClient({ cookies })
+  const supabase = getSupabaseClient()
   await supabase.auth.signOut()
   redirect('/')
 }
