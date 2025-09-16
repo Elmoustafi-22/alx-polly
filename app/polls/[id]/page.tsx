@@ -42,10 +42,10 @@ export default function PollPage({ params }: PollPageProps) {
 
   if (loading) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-2 text-muted-foreground">Loading poll...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-400 mx-auto"></div>
+          <p className="mt-2 text-slate-300">Loading poll...</p>
         </div>
       </div>
     )
@@ -59,34 +59,36 @@ export default function PollPage({ params }: PollPageProps) {
   const isOwner = user?.id === poll.created_by
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="max-w-2xl mx-auto">
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <CardTitle className="text-2xl font-aeonik">{poll.title}</CardTitle>
-                {poll.description && (
-                  <CardDescription className="text-base">{poll.description}</CardDescription>
-                )}
-                <div className="text-sm text-muted-foreground">
-                  {totalVotes} total votes • {poll.poll_options?.length || 0} options
-                  {isOwner && <span className="ml-2 text-blue-600">• Your poll</span>}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white p-4 sm:p-6 lg:p-8">
+      <div className="container mx-auto">
+        <div className="max-w-2xl mx-auto">
+          <Card className="bg-slate-800/30 backdrop-blur-sm border border-slate-700 rounded-2xl text-white">
+            <CardHeader>
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <CardTitle className="text-2xl font-aeonik text-white">{poll.title}</CardTitle>
+                  {poll.description && (
+                    <CardDescription className="text-base text-slate-400 mt-1">{poll.description}</CardDescription>
+                  )}
+                  <div className="text-sm text-slate-400 mt-2">
+                    {totalVotes} total votes • {poll.poll_options?.length || 0} options
+                    {isOwner && <span className="ml-2 text-indigo-400">• Your poll</span>}
+                  </div>
                 </div>
+                {isOwner && (
+                  <Link href={`/polls/${poll.id}/edit`}>
+                    <Button variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg">
+                      Edit Poll
+                    </Button>
+                  </Link>
+                )}
               </div>
-              {isOwner && (
-                <Link href={`/polls/${poll.id}/edit`}>
-                  <Button variant="outline" size="sm">
-                    Edit Poll
-                  </Button>
-                </Link>
-              )}
-            </div>
-          </CardHeader>
-          <CardContent>
-            <PollVoteForm poll={poll} />
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent>
+              <PollVoteForm poll={poll} />
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   )
